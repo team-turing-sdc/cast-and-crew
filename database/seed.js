@@ -49,7 +49,6 @@ const generateMovies = () => {
   console.log('done');
 }
 
-
 generateActors();
 
 generateMovies();

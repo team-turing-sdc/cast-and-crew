@@ -7,7 +7,6 @@ const port = 2002;
 const path = require("path");
 
 
-
 app.use('/', express.static(path.join(__dirname, '../client')));
 
 app.use(cors());
