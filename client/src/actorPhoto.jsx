@@ -1,5 +1,5 @@
-import React from 'react';
-import Popup from 'reactjs-popup';
+import React from "react";
+import Popup from "reactjs-popup";
 
 const PhotoWrapper = window.styled.div`
   position: relative;
@@ -65,28 +65,44 @@ class ActorPhoto extends React.Component {
     };
     this.openModal = this.openModal.bind(this);
     this.closeModal = this.closeModal.bind(this);
+    this.parseFilmography = this.parseFilmography.bind(this);
+    console.log(props);
   }
 
-
-  openModal () {
+  parseFilmography() {
+    let filmography = JSON.parse(this.props.actor.filmography);
+    return filmography;
+  }
+  openModal() {
     this.setState({ open: true });
   }
-  closeModal () {
+  closeModal() {
     this.setState({ open: false });
   }
 
   render() {
     return (
       <PhotoWrapper>
-        <ActorPhotoStyles src={this.props.actor.photo} onClick={this.openModal}/>
-        <Popup open={this.state.open} closeOnDocumentClick onClose={this.closeModal}>
+        <ActorPhotoStyles
+          src={this.props.actor.photo}
+          onClick={this.openModal}
+        />
+        <Popup
+          open={this.state.open}
+          closeOnDocumentClick
+          onClose={this.closeModal}
+        >
           <BioModal classname="bio-modal">
-            <a className="close" onClick={this.closeModal}>&times;</a>
+            <a className="close" onClick={this.closeModal}>
+              &times;
+            </a>
             <div className="header">Bio:</div>
             <div className="content">{this.props.actor.bio}</div>
             <div className="header">Filmography:</div>
             <div className="content">
-              {this.props.actor.filmography.map((film, index) => (<div key={index}>{film.title}</div>))}
+              {this.parseFilmography().map((film, index) => (
+                <div key={index}>{film}</div>
+              ))}
             </div>
           </BioModal>
         </Popup>
