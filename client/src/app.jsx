@@ -1,7 +1,8 @@
-import React from 'react';
+import React from "react";
 // import styled from 'styled-components';
-import Carousel from './carousel.jsx';
-
+import ReactDOM from "react-dom";
+import Carousel from "./carousel.jsx";
+import axios from "axios";
 // === STYLES === //
 
 const Wrapper = window.styled.section`
@@ -14,33 +15,30 @@ class App extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      movieId: 1,
-      title: '2001: A SPACE ODYSSEY',
-      cast: []
+      cast: [],
+      urlID: window.location.pathname.slice(1),
+      title: "2001: A SPACE ODYSSEY"
     };
+    this.getCast = this.getCast.bind(this);
   }
-
 
   // === GET CAST MEMBERS BASED ON MOVIE ID === //
 
-  getCast(movieId) {
-    fetch(`http://localhost:2002/actors?movieId=${movieId}`)
-      .then(res => res.json())
-      .then(castInfo =>
-        this.setState({
-          cast: castInfo
-        })
-      )
-      .catch(err=> {
+  getCast() {
+    axios
+      .get(`http://localhost:2002/actors/${this.state.urlID}`)
+      .then(res => {
+        console.log(res.data);
+        this.setState({ cast: res.data });
+      })
+      .catch(err => {
         console.log(`getCast error=${err}`);
       });
   }
-
   // === GET CAST MEMBERS BASED ON COMPONENT MOUNT === //
 
   componentDidMount() {
-    this.getCast(this.state.movieId);
-    // console.log(this.state);
+    this.getCast();
   }
 
   // === RENDER LIST OF CAST MEMBERS (for testing purposes) === //
@@ -48,7 +46,7 @@ class App extends React.Component {
   render() {
     return (
       <Wrapper>
-        <Carousel castInfo={this.state.cast} title={this.state.title}/>
+        <Carousel castInfo={this.state.cast} title={this.state.title} />
       </Wrapper>
     );
   }
