@@ -26,7 +26,7 @@ class App extends React.Component {
 
   getCast() {
     axios
-      .get(`http://localhost:2002/actors/${this.state.urlID}`)
+      .get(`/actors/${this.state.urlID}`)
       .then(res => {
         console.log(res.data);
         this.setState({ cast: res.data });

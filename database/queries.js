@@ -1,8 +1,8 @@
 const Pool = require("pg").Pool;
 
 const pool = new Pool({
-  user: "rebeccasawyer",
-  host: "localhost",
+  user: "postgres",
+  host: "ec2-18-191-228-224.us-east-2.compute.amazonaws.com",
   database: "fandagit",
   password: "",
   port: 5432
@@ -21,10 +21,10 @@ const getActorById = (id1, id2, callback) => {
   );
 };
 
-const createActor = (name, title, role, photo, bio, filmography, callback) => {
+const createActor = (name, role, photo, bio, filmography, callback) => {
   pool.query(
-    "INSERT INTO actors (name, title, role, photo, bio, filmography) VALUES ($1, $2, $3, $4, $5, $6)",
-    [name, title, movieId, role, photo, bio, filmography],
+    "INSERT INTO actors (name, role, photo, bio, filmography) VALUES ($1, $2, $3, $4, $5)",
+    [name, role, photo, bio, filmography],
     (err, results) => {
       if (err) {
         throw err;
@@ -34,10 +34,10 @@ const createActor = (name, title, role, photo, bio, filmography, callback) => {
   );
 };
 
-const updateActor = (name, title, id, callback) => {
+const updateActor = (name, id, callback) => {
   pool.query(
-    "UPDATE actors SET name = $1, title = $2 WHERE id = $3",
-    [name, title, id],
+    "UPDATE actors SET name = $1 WHERE id = $3",
+    [name, id],
     (err, results) => {
       if (err) {
         throw err;
