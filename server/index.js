@@ -1,9 +1,10 @@
+const newrelic = require('newrelic');
 const express = require("express");
 const cors = require("cors");
 const app = express();
 const bodyParser = require("body-parser");
 const db = require("../database/queries.js");
-const port = 2002;
+const port = process.env.PORT || 80;
 const path = require("path");
 
 app.use(bodyParser.json());
@@ -52,8 +53,9 @@ app.get("/:id", (req, res) => {
 });
 
 app.post("/actors", (req, res) => {
-  let { name, title, role, photo, bio, filmography } = req.body;
-  db.createActor(name, title, role, photo, bio, filmography, (err, data) => {
+  let { name, role, photo, bio, filmography } = req.body;
+  console.log(name);
+  db.createActor(name, role, photo, bio, filmography, (err, data) => {
     if (err) {
       throw err;
     }
@@ -63,10 +65,10 @@ app.post("/actors", (req, res) => {
 });
 
 app.put("/actors/:id", (req, res) => {
-  let id = parseInt(req.params.id);
+  let id = req.params.id;
   let { name, title } = request.body;
 
-  db.updateActor(name, title, id, (err, data) => {
+  db.updateActor(name, id, (err, data) => {
     if (err) {
       throw err;
     }
@@ -76,7 +78,7 @@ app.put("/actors/:id", (req, res) => {
 });
 
 app.delete("/actors/:id", (req, res) => {
-  let id = parseInt(req.params.id);
+  let id = req.params.id;
 
   db.deleteActor(id, (err, data) => {
     if (err) {

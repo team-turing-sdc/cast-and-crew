@@ -10,16 +10,18 @@
   "scripts": {
     "test": "jest --coverage",
     "react-dev": "webpack -d --watch",
-    "server-dev": "nodemon server/index.js",
+    "server": "nodemon server/index.js",
     "seed": "node database/seed.js"
   },
   "dependencies": {
+    "artillery": "^1.6.0-27",
     "axios": "^0.18.0",
     "body-parser": "^1.19.0",
     "cors": "^2.8.5",
     "express": "^4.16.4",
     "mongodb": "^3.2.2",
     "mongoose": "^5.4.20",
+    "newrelic": "^5.7.0",
     "pg": "^7.10.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
